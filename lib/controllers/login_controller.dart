@@ -1,92 +1,65 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_bussv/services/auth_service.dart';
 
 import '../services/location_service.dart';
-
 class LoginController extends GetxController {
-
-
   TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController= TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  final AuthService authService = AuthService(); // Inicializa AuthService
+
   // Método para limpiar los campos
   void clearFields() {
     emailController.clear();
     passwordController.clear();
   }
-  void Login() {
+
+  // Método para manejar el inicio de sesión
+  void Login() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
-    print('Email ${email}');
-    print('Password ${password}');
-
-    Get.snackbar('Email', email);
-    Get.snackbar('Password', password);
+    print('Email: $email');
+    print('Password: $password');
 
     if (isValidForm(email, password)) {
-      Get.snackbar('Formulario valido', 'Estado 200');
-      // Navega a la pantalla de servicio de ubicación
-      Get.to(() => LocationServiceScreen());
+      // Llama al servicio de autenticación
+      bool isAuthenticated = await authService.login(email, password);
+
+      if (isAuthenticated) {
+        Get.snackbar('Inicio de sesión', 'Autenticación exitosa');
+        print('Autenticación exitosa');
+        // Navega a la pantalla de servicio de ubicación
+        Get.to(() => LocationServiceScreen());
+      } else {
+        Get.snackbar('Inicio de sesión', 'Credenciales incorrectas');
+        print('Credenciales incorrectas');
+      }
     }
   }
+  bool isValidForm(String email, String password) {
+    if (!GetUtils.isEmail(email)) {
+      Get.snackbar('Formulario no válido', 'Por favor ingrese un Email válido');
+      return false;
+    }
 
+    if (email.isEmpty) {
+      Get.snackbar('Formulario no válido', 'Por favor ingresa un Email');
+      return false;
+    }
 
+    if (password.isEmpty) {
+      Get.snackbar('Formulario no válido', 'Por favor ingresa una contraseña válida');
+      return false;
+    }
 
-
-
-
-bool isValidForm(String email, String password){
-if(!GetUtils.isEmail(email)){
-Get.snackbar('Formulario no valido', 'Por favor ingrese un Email valido');
-return false;
-}
-
-if (email.isEmpty){
-  Get.snackbar('Formulario no valido', 'Por favor ingresa un Email');
-
-  return false;
-}
-
-if (password.isEmpty){
-  Get.snackbar('Formulario no valido', 'Por favor ingresa una contraseña valida');
-  return false;
-}
-
-return true;
-
-}
-
+    return true;
+  }
 
   void goToRegisterPage() {
     Get.toNamed('/register');
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+

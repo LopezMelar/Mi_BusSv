@@ -1,4 +1,4 @@
 class Environment {
 
-  static const String API_URL = "http://192.168.1.88:3000/";
+  static const String API_URL = "http://192.168.1.223:3000/";
 }

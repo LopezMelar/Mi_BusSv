@@ -5,7 +5,6 @@ import 'environment.dart';
 
 class DriversProvider extends GetConnect {
 
-  // La URL de la API para los conductores
   String url = Environment.API_URL + 'api/drivers';
 
   // Método para crear un nuevo conductor

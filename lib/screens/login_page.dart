@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_bussv/services/auth_service.dart';
 
 import '../controllers/login_controller.dart';
 import '../services/location_service.dart';
@@ -7,6 +8,7 @@ import 'role_selection_screen.dart'; // Importar la pantalla de selección de ro
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final AuthService authService = AuthService();
   LoginController conlog = Get.put(LoginController());
 
   @override

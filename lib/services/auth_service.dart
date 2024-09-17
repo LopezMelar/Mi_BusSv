@@ -2,10 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthService {
-  // Método para verificar las credenciales en la base de datos
   Future<bool> login(String email, String password) async {
-  //URL DE MI BACKEND PARA QUE MANEJE LA AUTENTICACION EN MI BASE DE DATOS MYSQL
-    var url = Uri.parse('https://tuservidor.com/api/login');
+    // URL de tu backend para manejar la autenticación
+    var url = Uri.parse('http://192.168.1.223:3000/api/login');
     var response = await http.post(url, body: {
       'email': email,
       'password': password

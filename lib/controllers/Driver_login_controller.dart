@@ -22,6 +22,7 @@ class DriverLoginController extends GetxController {
 
     if (isValidForm(email, password)) {
       Get.snackbar('Formulario válido', 'Estado 200');
+      Get.snackbar('Formulario válido', 'Estado 200');
       Get.to(() => LocationServiceScreen());
     }
   }
