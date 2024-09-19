@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_bussv/screens/login_page.dart';
 
 import '../models/user.dart';
 import '../services/users_provider.dart';
@@ -22,6 +23,7 @@ class RegisterController extends GetxController {
     String passwordUser = passwordController.text.trim();
     String passwordConfirm = passwordConfirmController.text.trim();
 
+    // Verificar si el formulario es válido
     if (isValidForm(email, nameUser, lastNameUser, cellphone, passwordUser, passwordConfirm)) {
       User user = User(
         email: email,
@@ -31,16 +33,31 @@ class RegisterController extends GetxController {
         passwordUser: passwordUser,
       );
 
+      // Realizar la solicitud de creación de usuario
       Response response = await usersProvider.create(user);
 
+      // Si el registro fue exitoso, limpiar el formulario
       if (response.statusCode == 201) {
         Get.snackbar('Formulario correcto', 'Se ha enviado tu solicitud');
+        clearForm();  // Llamada a clearForm después de registro exitoso
+        Get.off(() => LoginPage());
       } else {
         Get.snackbar('Error', 'Error al registrar: ${response.body}');
       }
     }
   }
 
+  // Método para limpiar los campos del formulario
+  void clearForm() {
+    emailController.clear();
+    nameController.clear();
+    lastNameController.clear();
+    telController.clear();
+    passwordController.clear();
+    passwordConfirmController.clear();
+  }
+
+  // Validación del formulario
   bool isValidForm(String email, String name, String lastName, String tel, String password, String passwordConfirm) {
     List<String> validateFields = [email, name, lastName, tel, password, passwordConfirm];
 

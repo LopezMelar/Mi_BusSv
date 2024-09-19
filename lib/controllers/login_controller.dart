@@ -41,17 +41,17 @@ class LoginController extends GetxController {
   }
   bool isValidForm(String email, String password) {
     if (!GetUtils.isEmail(email)) {
-      Get.snackbar('Formulario no válido', 'Por favor ingrese un Email válido');
+      Get.snackbar('Error al iniciar sesion', 'Por favor ingrese un Email válido');
       return false;
     }
 
     if (email.isEmpty) {
-      Get.snackbar('Formulario no válido', 'Por favor ingresa un Email');
+      Get.snackbar('Error al iniciar sesion', 'Por favor ingresa un Email');
       return false;
     }
 
     if (password.isEmpty) {
-      Get.snackbar('Formulario no válido', 'Por favor ingresa una contraseña válida');
+      Get.snackbar('Error al iniciar sesion', 'Por favor ingresa una contraseña válida');
       return false;
     }
 

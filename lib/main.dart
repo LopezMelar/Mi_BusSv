@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/register_driver': (context) => DriverRegisterPage()
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

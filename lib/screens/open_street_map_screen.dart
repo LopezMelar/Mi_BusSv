@@ -106,34 +106,73 @@ class _OpenStreetMapScreenState extends State<OpenStreetMapScreen> {
     final initialPosition = LatLng(widget.latitude, widget.longitude);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('OpenStreetMap with Flutter'),
-      ),
       body: currentLocation == null
           ? const Center(child: CircularProgressIndicator())
-          : FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(
-          initialCenter: initialPosition,
-          initialZoom: 17,
-          onTap: (tapPosition, point) => _addDestinationMarker(point),
-        ),
+          : Stack(
         children: [
-          TileLayer(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: const ['a', 'b', 'c'],
-          ),
-          MarkerLayer(
-            markers: markers,
-          ),
-          PolylineLayer(
-            polylines: [
-              Polyline(
-                points: routePoints,
-                strokeWidth: 4.0,
-                color: Colors.blue,
+          FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(
+              initialCenter: initialPosition,
+              initialZoom: 17,
+              onTap: (tapPosition, point) => _addDestinationMarker(point),
+            ),
+            children: [
+              TileLayer(
+                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                subdomains: const ['a', 'b', 'c'],
+              ),
+              MarkerLayer(
+                markers: markers,
+              ),
+              PolylineLayer(
+                polylines: [
+                  Polyline(
+                    points: routePoints,
+                    strokeWidth: 4.0,
+                    color: Colors.blue,
+                  ),
+                ],
               ),
             ],
+          ),
+          // Barra de búsqueda flotante
+          Positioned(
+            top: 40,  // Ajusta este valor para dejar más espacio debajo de la barra de estado del teléfono
+            left: 20,
+            right: 20,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.search, color: Colors.grey),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Buscar...',
+                        border: InputBorder.none,
+                      ),
+                      onSubmitted: (value) {
+                        // Implementar la búsqueda de ubicación
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

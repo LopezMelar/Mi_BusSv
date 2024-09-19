@@ -28,7 +28,6 @@ class LocationServiceScreen extends StatelessWidget {
         arguments: [position.latitude, position.longitude],
       );
     } catch (e) {
-      // Manejo de errores
       print('Error: $e');
     }
   }
@@ -45,7 +44,6 @@ class LocationServiceScreen extends StatelessWidget {
             child: const Text('Cancelar'),
           ),
           TextButton(
-
             onPressed: () {
               // Limpiar los campos de correo y contraseña
               Get.find<LoginController>().clearFields();
@@ -67,36 +65,54 @@ class LocationServiceScreen extends StatelessWidget {
       child: Scaffold(
         body: Stack(
           children: <Widget>[
-            Positioned.fill(
-              child: Image.asset(
-                'assets/images/background_map.jpg', // Imagen de fondo
-                fit: BoxFit.cover,
-              ),
+            Container(
+              color: Colors.white, // Fondo blanco
             ),
             Center(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 5), // Efecto borroso
                 child: Container(
                   width: 300,
-                  height: 300,
+                  height: 400,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7), // Fondo opaco
-                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.white.withOpacity(0.9), // Fondo opaco
+                    borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Ubicación en tiempo real',
-                        style: TextStyle(color: Colors.black, fontSize: 20),
+                      Image.asset(
+                        'assets/images/logo.png', // Logo especificado
+                        width: 100,
+                        height: 100,
                       ),
-                      SizedBox(height: 25),
+                      SizedBox(height: 20),
+                      Text(
+                        'Permite que Mi BusSv acceda a tu ubicación exacta',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Mi BusSv solicita acceso a tu ubicación para brindarte una mejor experiencia y cumplir con nuestras políticas.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
                           getCurrentLocation(context);
                         },
                         child: const Text(
-                          'Obtener Ubicación',
+                          'Continuar',
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
